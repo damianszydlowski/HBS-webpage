@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ pageType }}{% endblock %}
+
+{% block body %}
+    <h2>{{ pageType }}</h2>
+    <br />
+    <table id="rooms" style="width:100%">
+        {% if result %}
+    <tr>
+        <th>ID pokoju</th>
+        <th>Numer pokoju</th>
+        <th>Typ pokoju</th>
+        <th>Cena</th>
+    </tr>
+    {% for room in result %}
+    <tr>
+        <td> {{ room.id }}</td>
+        <td> {{ room.number }}</td>
+        <td> {{ room.type_name }}</td>
+        <td> {{ room.price }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}

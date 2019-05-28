@@ -1,0 +1,85 @@
+
+.container {
+    margin-top:0
+}
+
+#alerts {
+    margin-top:0;
+    position:absolute;
+}
+
+.main-photo {
+  background: url(https://www.safarihotelsnamibia.com/wp-content/uploads/2014/11/Safari-Court-Hotel-Pool.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+}
+
+.main-photo-hello-text {
+  background-color: rgba(0,0,0,0.3);
+  height: 100%;
+  width: 100%;
+}
+
+.main-photo h2 {
+  color: #fff;
+  padding-top: 30vh;
+}
+
+#offer {
+  padding: 20px;
+}
+
+#offer h3 {
+  color: #7081cf;
+  margin-bottom: 20px;
+}
+
+#offer p {
+    text-indent:2em;
+}
+
+.scroll-downs {
+  margin: auto;
+  margin-top: 30vh;
+  width: 34px;
+  height: 55px;
+}
+
+.mousey {
+  width: 3px;
+  padding: 10px 15px;
+  height: 35px;
+  border: 2px solid #fff;
+  border-radius: 25px;
+  opacity: 100%;
+  box-sizing: content-box;
+}
+
+.scroller {
+  width: 3px;
+  height: 10px;
+  border-radius: 25%;
+  background-color: #fff;
+  animation-name: scroll;
+  animation-duration: 2.2s;
+  animation-timing-function: cubic-bezier(.15,.41,.69,.94);
+  animation-iteration-count: infinite;
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+}

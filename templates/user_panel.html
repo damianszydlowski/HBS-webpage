@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}Panel użytkownika{% endblock %}
+
+{% block body %}
+    <h2>Dane użytkownika:</h2>
+    <br />
+    <table id="user-data" style="width:100%">
+        <tr>
+            <td class="col1">Imię i nazwisko:</td>
+            <td>
+                {{ current_user.name }} {{ current_user.surname }}
+            </td>
+        </tr>
+        <tr>
+            <td class="col1">Adres:</td>
+            <td>{{ current_user.address }}<br />
+                {{ current_user.zip_code }} {{ current_user.city }}<br />
+                {{ current_user.country }}
+            </td>
+        </tr>
+            {% if has_reservation %}
+        <tr>
+            <td class="colspan" colspan=2>Informacje o rezerwacji:</td>
+        </tr>
+        <tr>
+            <td class="col1">Rezerwacja numer:</td>
+            <td># {{ res_info.id }} </td>
+        </tr>
+        <tr>
+            <td class="col1">Okres:</td>
+            <td>{{ res_info.date_from }} - {{ res_info.date_to }} </td>
+        </tr>
+        <tr>
+            <td class="col1">Numer pokoju:</td>
+            <td>{{ res_info.room_number }}</td>
+        </tr>
+        <tr>
+            <td class="col1">Typ pokoju:</td>
+            <td>{{ res_info.room_type }}</td>
+        </tr>
+        <tr>
+            <td class="col1">Cena:</td>
+            <td>{{ res_info.room_price }} PLN</td>
+        </tr>
+            {% else %}
+        <tr>
+            <td class="colspan" colspan=2>
+                Nie posiadasz rezerwacji
+            </td>
+        </tr>
+            {% endif %}
+
+</table>
+{% endblock %}

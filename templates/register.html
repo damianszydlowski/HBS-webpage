@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block head %}
+	<link href="../static/css/login.css" rel="stylesheet" type="text/css">
+    {{ super() }}
+{% endblock %}
+{% block body %}
+  <form action="" method=post class="form-horizontal">
+	<h1>Rejestracja</h1>
+    <h3> Dane logowania </h3>
+	<div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="text" id="email" name="email" placeholder=" " required>
+            <span>Adres e-mail *</span>
+        </label>
+	</div>
+
+	<div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="password" id="password" name="password" placeholder=" " required>
+            <span>Hasło *</span>
+        </label>
+	</div>
+
+	<div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="password" id="password2" name="password2" placeholder=" " required>
+            <span>Powtórz hasło *</span>
+        </label>
+	</div>
+
+    <h3>Dane kontaktowe</h3>
+
+	<div class="line">
+        <label class="pure-material-textfield-outlined half">
+            <input type="text" id="name" name="name" placeholder=" " required>
+            <span>Imię *</span>
+        </label>
+
+        <label class="pure-material-textfield-outlined half">
+            <input type="text" id="surname" name="surname" placeholder=" " required>
+            <span>Nazwisko *</span>
+        </label>
+	</div>
+
+	<div class="line">
+        <label class="pure-material-textfield-outlined half">
+        <input type="number" id="phone1" name="phone1"
+				placeholder=" " required>
+            <span>Numer telefonu *</span>
+        </label>
+
+        <label class="pure-material-textfield-outlined half">
+        <input type="number" id="phone2" name="phone2"
+				placeholder=" ">
+            <span>Drugi nr. tel.</span>
+        </label>
+	</div>
+
+    <div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="text" id="address" name="address" placeholder=" " required>
+            <span>Ulica i nr domu/mieszkania *</span>
+        </label>
+	</div>
+
+    <div class="line">
+        <label class="pure-material-textfield-outlined half">
+            <input type="text" id="zip_code" name="zip_code" placeholder=" " required>
+            <span>Kod pocztowy *</span>
+        </label>
+
+        <label class="pure-material-textfield-outlined half">
+            <input type="text" id="city" name="city" placeholder=" " required>
+            <span>Miasto *</span>
+        </label>
+	</div>
+
+    <div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="text" id="country" name="country" placeholder=" " required>
+            <span>Kraj *</span>
+        </label>
+	</div>
+
+	<div class="line">
+        <button type="submit" class="btn btn-success">Zarejestruj</button>
+	</div>
+</form>
+{% endblock %}

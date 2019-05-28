@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Logowanie{% endblock %}
+
+{% block head %}
+	<link href="../static/css/login.css" rel="stylesheet" type="text/css">
+    {{ super() }}
+{% endblock %}
+{% block body %}
+  <form action="" method=post class="form-horizontal">
+    <h2>Logowanie</h2>
+
+    <div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="text" id="email" name="email" placeholder=" " required>
+            <span>Adres e-mail</span>
+        </label>
+    </div>
+
+    <div class="line">
+        <label class="pure-material-textfield-outlined">
+            <input type="password" id="password" name="password" placeholder=" " required>
+            <span>Hasło</span>
+        </label>
+    </div>
+
+     <div class="line">
+        <div class="controls">
+          <span class="remember-me-helper">Zapamiętaj mnie</span> <input type="checkbox" id="remember_me" name="remember_me">
+        </div>
+    </div>
+
+    <div class="line">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Zaloguj</button>
+        </div>
+    </div>
+  </form>
+{% endblock %}

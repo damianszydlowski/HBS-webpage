@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+
+	<meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+	<link rel="shortcut icon" type="image/png" href="../static/src/favicon.ico"/>
+	<link href="../static/css/layout.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+
+	{% endblock %}
+</head>
+
+<div id="top-menu">
+    <ul id="page-list">
+        <li><a href={{ url_for('home') }}>Strona główna</a></li>
+        <li><a href={{ url_for('list_rooms',type='all') }}>Wszystkie pokoje</a></li>
+        <li><a href={{ url_for('list_rooms',type='available') }}>Tylko dostępne</a></li>
+    </ul>
+
+	<ul id="user-mngmnt">
+
+    {% if current_user.is_authenticated %}
+		<li><a href={{ url_for('user_panel') }} class="user">{{ current_user.name }}</a> </li>
+        <li><a href={{ url_for('logout') }}>Wyloguj</a></li>
+	{% else %}
+        <li><a href={{ url_for('login') }}>Zaloguj</a></li>
+	{% endif %}
+	</ul>
+</div>
+
+<div id="alerts">
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	  <div class="alert">
+		    <ul class="flashes">
+		    {% for message in messages %}
+		      <li>{{ message }}</li>
+		    {% endfor %}
+		    </ul>
+		</div>
+	{% endif %}
+	{% endwith %}
+</div>
+
+<div id="main" class="container">
+
+	{% block body %}{% endblock %}
+</div>
+</html>
