@@ -47,6 +47,7 @@ class Room(db.Model):
     size_m2 = db.Column("Sizem2", db.Integer)
     type_id = db.Column("RoomTypeID", db.Integer, db.ForeignKey("RoomType.id"), nullable=False)
     price = db.Column("Price", db.Integer)
+    type_name = ""
 
     def __repr__(self):
         return '<Room {}>'.format(self.number)
@@ -63,16 +64,20 @@ class RoomType(db.Model):
 
 class Reservation(db.Model):
     __tablename__ ="reservations"
-    id = db.Column("ReservationID", primary_key=True)
-    guest_id = db.Column("GuestID", db.Integer, db.ForeignKey("Guest.id"), nullable=False)
-    room_id = db.Column("RoomID", db.Integer, db.ForeignKey("Room.id"), nullable=False)
+    id = db.Column("ReservationID", db.Integer, primary_key=True)
+    guest_id = db.Column("GuestID", db.Integer, db.ForeignKey("guests.GuestID"), nullable=False)
+    room_id = db.Column("RoomID", db.Integer, db.ForeignKey("rooms.RoomID"), nullable=False)
     date_from = db.Column("DateFrom", db.Date)
     date_to = db.Column("DateTo", db.Date)
     confirmed = db.Column("IsConfirmed", db.Boolean)
     people = db.Column("PplNumber", db.Integer)
-    breakfasts = db.Column("Breakfasts", db.Integer)
-    dinners = db.Column("Dinners", db.Integer)
-    suppers = db.Column("Suppers", db.Integer)
+    breakfasts = db.Column("Breakfasts", db.Integer, default=0)
+    dinners = db.Column("Dinners", db.Integer, default=0)
+    suppers = db.Column("Suppers", db.Integer, default=0)
     
     def __repr__(self):
         return '<Reservation {}:{}>'.format(self.guest_id, self.room_id)
+
+    def available(self,desired_date_from, desired_date_to):
+        return ((desired_date_from <= self.date_from and desired_date_to <= self.date_from) or
+                    (desired_date_from >= self.date_to and desired_date_to >= self.date_to))

@@ -3,15 +3,16 @@
 {% block title %}Logowanie{% endblock %}
 
 {% block head %}
-	<link href="../static/css/login.css" rel="stylesheet" type="text/css">
+	<link href="../static/css/form.css" rel="stylesheet" type="text/css">
     {{ super() }}
 {% endblock %}
 {% block body %}
   <form action="" method=post class="form-horizontal">
-    <h2>Logowanie</h2>
+    <h1>Logowanie</h1>
 
     <div class="line">
         <label class="pure-material-textfield-outlined">
+<!--            if -->
             <input type="text" id="email" name="email" placeholder=" " required>
             <span>Adres e-mail</span>
         </label>
@@ -28,7 +29,7 @@
         <div class="controls">
           <span class="remember-me-helper">Zapamiętaj mnie</span> <input type="checkbox" id="remember_me" name="remember_me">
         </div>
-    </div>
+     </div>
 
     <div class="line">
         <div class="controls">

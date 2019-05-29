@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Rezerwacja{% endblock %}
+{% block head %}
+<link href="../static/css/form.css" rel="stylesheet" type="text/css">
+{{ super() }}
+{% endblock %}
+{% block body %}
+<h1>Wybierz pokój</h1>
+{% if result %}
+<h4>W wybranym terminie ({{ date_from }} - {{ date_to }}) dostępne są następujące pokoje:</h4>
+<br />
+<form action="" method=post class="form-horizontal">
+   {% for room in result %}
+   <div class="line">
+      <label class="radio-container">Typ: <b>{{ room.type_name }}</b> | ilość podpokoi: {{ room.subrooms }}
+      | Łóżka jednoosobowe: {{ room.bed1ppl }} | Łóżka dwuosobowe: {{ room.bed2ppl }}
+      | Kuchnia: {{ room.kitchen }} | Minibar: {{ room.minibar }} } Rozmiar: {{ room.size_m2 }} m²
+      | Cena za dobę: <b>{{ room.price }} PLN</b>
+      <input type="radio" name="choose_room" value={{ room.id }} required />
+      <span class="checkmark"></span>
+      </label>
+   </div>
+   <br />
+   {% endfor %}
+   <div class="line">
+      <div class="controls">
+         <span class="remember-me-helper">Potwierdzam rezerwację</span> <input type="checkbox" id="remember_me" name="remember_me" required>
+      </div>
+   </div>
+   <div class="line">
+      <div class="controls">
+         <button type="submit" class="btn btn-success">Zarezerwuj</button>
+      </div>
+   </div>
+</form>
+{% else %}
+<h4>W wybranym terminie ({{ date_from }} - {{ date_to }}) nie posiadamy dostępnych pokoi.</h4>
+<div class="hint"><a href={{ url_for('book') }}>Sprawdź inny termin</a></div>
+{% endif %}
+{% endblock %}

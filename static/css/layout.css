@@ -8,10 +8,14 @@ body {
     margin:0;
 }
 
-h2, h3 {
+h1, h2, h3, h4, h5 {
     margin:0;
     padding:0;
     text-align:center;
+}
+
+h1 {
+    margin-bottom:20px
 }
 
 table {
@@ -20,6 +24,11 @@ table {
 
 th, td {
     width:25%
+}
+
+.hint{
+    text-align:center;
+    margin:auto
 }
 
 #top-menu {
@@ -74,22 +83,23 @@ ul#user-mngmnt > li > .user {
     color: #fff;
 }
 
-#user-data {
+.user-data {
     max-width:500px;
     margin-left:auto;
-    margin-right:auto
+    margin-right:auto;
+    margin-top:10px;
     }
 
-#user-data td{
+.user-data td{
     text-align:left;
-    padding:10px;
+    padding:2px 6px;
 }
 
-#user-data .col1{
+.user-data .col1{
     text-align:right;
 }
 
-#user-data .colspan{
+.user-data .colspan{
     text-align:center;
     font-weight:700
 }
@@ -122,5 +132,6 @@ ul#user-mngmnt > li > .user {
     list-style:none
 }
 
-.container {
+footer {
+    margin-top:20px;
 }

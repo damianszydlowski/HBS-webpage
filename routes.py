@@ -2,10 +2,11 @@ from main import app
 from flask import request, flash, url_for, redirect, render_template
 from flask_login import login_user, logout_user, login_required, current_user
 from models import *
+from datetime import datetime, timedelta
 
 #strings
-pageTypes = {"all": "Wszystkie pokoje", "available": "Tylko dostępne pokoje"}
-
+pageTypes = {"all": "Wszystkie pokoje", "available": "Tylko dostępne pokoje", "dates": "Z podanego przedziału"}
+date_format = "%Y-%m-%d"
 
 @app.route("/")
 def home():
@@ -77,14 +78,60 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route("/rooms/<type>")
+@app.route('/book',  methods=['GET', 'POST'])
+def book():
+    if request.method == 'GET':
+        date_from = datetime.now()
+        date_to = date_from + timedelta(days=3)
+        return render_template('book.html', date_from=date_from, date_to=date_to)
+    date_from = request.form['date-from']
+    date_to = request.form['date-to']
+    people_number = request.form['ppl']
+    return redirect("/search/from={}&to={}&ppl={}".format(date_from, date_to, people_number))
+
+
+@app.route('/search/from=<date_from>&to=<date_to>&ppl=<ppl>', methods=['GET', 'POST'])
+@login_required
+def list_rooms_dates(date_from, date_to, ppl):
+    date_from = datetime.strptime(date_from, date_format).date()
+    date_to = datetime.strptime(date_to, date_format).date()
+    reservations = Reservation.query.all()
+    booked = []
+    for res in reservations:
+        if not res.available(date_from, date_to):
+            booked.append(res.room_id)
+    rooms = Room.query.filter(~Room.id.in_(booked))
+    rooms_with_desc = []
+    for r in rooms:
+        r.type_name = RoomType.query.filter_by(id=r.type_id).first().name
+        rooms_with_desc.append(r)
+    if request.method == 'GET':
+        return render_template("choose_room.html", date_from=date_from, date_to=date_to, result=rooms_with_desc)
+    room_id = request.form['choose_room']
+    reservation = Reservation(
+        guest_id = current_user.id,
+        room_id = room_id,
+        date_from = date_from,
+        date_to = date_to,
+        confirmed = False,
+        people = ppl
+    )
+    db.session.add(reservation)
+    db.session.commit()
+    flash('Pomyślnie zarezerwowano!'.format(current_user.name))
+    return redirect(url_for('user_panel'))
+
+
+@app.route('/rooms/<type>')
 @login_required
 def list_rooms(type):
+    rooms = []
     if type == "all":
         rooms = Room.query.all()
     elif type == "available":
         reserved = db.session.query(Reservation.room_id)
         rooms = Room.query.filter(~Room.id.in_(reserved))
+
     for room in rooms:
         room.type_name = RoomType.query.filter_by(id=room.type_id).first().name
     return render_template("rooms.html", pageType=pageTypes[type], result=rooms, content_type="application/json")
@@ -93,11 +140,15 @@ def list_rooms(type):
 @app.route("/user-panel")
 @login_required
 def user_panel():
-    res_info = Reservation.query.filter_by(guest_id=current_user.id).first()
-    has_reservation = res_info is not None
-    if has_reservation:
-        room = Room.query.filter_by(id=res_info.room_id).first()
-        res_info.room_number = room.number
-        res_info.room_type = RoomType.query.filter_by(id=room.type_id).first().name
-        res_info.room_price = room.price
-    return render_template("user_panel.html", has_reservation = has_reservation, res_info = res_info)
+    t = Reservation.query.filter_by(guest_id=current_user.id).order_by(Reservation.id.desc())
+    reservations = []
+    for res in t:
+        room = Room.query.filter_by(id=res.room_id).first()
+        res.room_number = room.number
+        res.room_type = RoomType.query.filter_by(id=room.type_id).first().name
+        res.room_price = room.price
+        res.room_price_total = abs((res.date_to - res.date_from).days)*room.price
+        reservations.append(res)
+    # return render_template("user_panel.html", has_reservation = has_reservation, res_info = res_info)
+
+    return render_template("user_panel.html", reservations = reservations)

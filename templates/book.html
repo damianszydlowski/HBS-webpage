@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Bookowanie{% endblock %}
+
+{% block head %}
+	<link href="../static/css/form.css" rel="stylesheet" type="text/css">
+    {{ super() }}
+{% endblock %}
+{% block body %}
+  <form action="" method=post class="form-horizontal">
+    <h1>Tworzenie rezerwacji</h1>
+    <h3>Od kiedy chcesz zarezerwować pokój?</h3>
+
+    <div class="line">
+            <input id="date-from" class="date-picker" name="date-from" type="date" value={{ date_from }} required>
+    </div>
+
+    <h3>Do kiedy?</h3>
+    <div class="line">
+            <input id="date-to" class="date-picker" name="date-to" type="date" value={{ date_to }} required>
+    </div>
+
+      <div class="line">
+        <label class="pure-material-textfield-outlined">
+        <input type="number" id="ppl" name="ppl"
+				placeholder=" " required>
+            <span>Liczba osób</span>
+        </label>
+      </div>
+
+    <div class="line">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Szukaj dostępnych pokoi</button>
+        </div>
+    </div>
+
+  </form>
+{% endblock %}

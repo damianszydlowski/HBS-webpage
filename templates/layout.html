@@ -16,7 +16,7 @@
     <ul id="page-list">
         <li><a href={{ url_for('home') }}>Strona główna</a></li>
         <li><a href={{ url_for('list_rooms',type='all') }}>Wszystkie pokoje</a></li>
-        <li><a href={{ url_for('list_rooms',type='available') }}>Tylko dostępne</a></li>
+        <li><a href={{ url_for('book') }}>Zabookuj pokój</a></li>
     </ul>
 
 	<ul id="user-mngmnt">
@@ -25,6 +25,7 @@
 		<li><a href={{ url_for('user_panel') }} class="user">{{ current_user.name }}</a> </li>
         <li><a href={{ url_for('logout') }}>Wyloguj</a></li>
 	{% else %}
+        <li><a href={{ url_for('register') }} class="user">Zarejestruj</a></li>
         <li><a href={{ url_for('login') }}>Zaloguj</a></li>
 	{% endif %}
 	</ul>
@@ -48,4 +49,6 @@
 
 	{% block body %}{% endblock %}
 </div>
+<footer>
+</footer>
 </html>
